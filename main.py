@@ -286,6 +286,21 @@ def play_level_2():
         for sprite in all_sprites:
             camera.apply(sprite)
 
+        if not pygame.sprite.collide_rect(player, purpose):
+            screen.fill((0, 0, 0))
+            all_sprites.draw(screen)
+            tiles_group.draw(screen)
+            player_group.draw(screen)
+            purpose_group.draw(screen)
+            enemy_group.draw(screen)
+        else:
+            all_sprites.empty()
+            tiles_group.empty()
+            player_group.empty()
+            purpose_group.empty()
+            enemy_group.empty()
+            return
+
         if not pygame.sprite.groupcollide(player_group, enemy_group, False, False):
             screen.fill((0, 0, 0))
             all_sprites.draw(screen)
