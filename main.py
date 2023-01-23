@@ -17,13 +17,13 @@ def load_image(name, color_key=None):
         raise SystemExit(message)
 
     if color_key is not None:
-        if color_key is -1:
+        if color_key == -1:
             color_key = image.get_at((0, 0))
         image.set_colorkey(color_key)
 
     else:
         image = image.convert_alpha()
-        print(image.get_bitsize(), bool(image.get_flags() & pygame.SRCALPHA))
+        #print(image.get_bitsize(), bool(image.get_flags() & pygame.SRCALPHA))
         return image
 
 
@@ -267,20 +267,20 @@ def play_level_2():
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_DOWN:
                     player.move_down()
-                    if pygame.sprite.spritecollideany(player, box_group):
-                        player.move_up()
+                    #if pygame.sprite.spritecollideany(player, box_group):
+                     #   player.move_up()
                 elif event.key == pygame.K_UP:
                     player.move_up()
-                    # if pygame.sprite.spritecollideany(player, box_group):
-                    #     player.move_down()
+                    #if pygame.sprite.spritecollideany(player, box_group):
+                    #    player.move_down()
                 elif event.key == pygame.K_LEFT:
                     player.move_left()
-                    # if pygame.sprite.spritecollideany(player, box_group):
-                    #     player.move_right()
+                    #if pygame.sprite.spritecollideany(player, box_group):
+                    #    player.move_right()
                 elif event.key == pygame.K_RIGHT:
                     player.move_right()
-                    # if pygame.sprite.spritecollideany(player, box_group):
-                    #     player.move_left()
+                    #if pygame.sprite.spritecollideany(player, box_group):
+                    #    player.move_left()
 
         camera.update(player)
         for sprite in all_sprites:
