@@ -189,6 +189,8 @@ def generate_level_2(level):
                 new_purpose = Purpose('purpose2', x, y, purpose_group)
             elif level[y][x] == '@':
                 new_player = Player('player2', x, y, player_group)
+            elif level[y][x] == '^':
+                new_enemy = Enemy(x, y, enemy_group)
             elif level[y][x] == '+':
                 Tile('sky', x, y, tiles_group)
                 Tile('clouds', x, y, tiles_group)
