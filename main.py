@@ -128,9 +128,12 @@ class Enemy(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect = self.image.get_rect().move(
             tile_width * pos_x + 15, tile_height * pos_y + 5)
+        self.vx = random.randint(-2, 2)
+        self.vy = random.randrange(-2, 2)
+
 
     def update(self, mov):
-        pass
+        self.rect = self.rect.move(self.vx, self.vy)
 
 
 class Camera:
@@ -306,6 +309,7 @@ def play_level_2():
                     #     player.move_left()
 
         camera.update(player)
+        enemy_group.update()
         for sprite in all_sprites:
             camera.apply(sprite)
 
