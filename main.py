@@ -6,6 +6,8 @@ import sys
 FPS = 60
 all_sprites = pygame.sprite.Group()
 play = True
+pygame.font.init()
+
 
 
 def load_image(name, color_key=None):
@@ -30,6 +32,11 @@ def terminate():
     print("exit")
     pygame.quit()
     sys.exit()
+
+def render_text(text,color):
+    font = pygame.font.Font(None, 30)
+    string_rendered = font.render(text, 1, color)
+    screen.blit(string_rendered, (0, 0))
 
 
 def start_screen():
@@ -356,9 +363,7 @@ def play_level():
 
         pygame.display.flip()
         clock.tick(FPS)
-        print(pygame.time.get_ticks() // 1000)
         pygame.event.pump()
-
 
 
 def play_level_2():
@@ -430,12 +435,11 @@ def play_level_2():
 
         pygame.display.flip()
         clock.tick(FPS)
-        print(pygame.time.get_ticks() // 1000)
 
 
 def play_level_3():
     player, purpose, x, y = generate_level_3(load_level('map3.txt'))
-
+    timer = pygame.time.get_ticks() // 1000 + 3000
     global tiles_group, player_group, purpose_group, box_group
     running = True
     while running:
@@ -473,13 +477,24 @@ def play_level_3():
             player_group.draw(screen)
             purpose_group.draw(screen)
             enemy_group.draw(screen)
+            if timer > 0:
+                render_text(str(timer), 'white')
+            else:
+                gameover = pygame.transform.scale(load_image('dead.jpg'), size)
+                screen.blit(gameover, (0, 0))
+                all_sprites.empty()
+                tiles_group.empty()
+                player_group.empty()
+                purpose_group.empty()
+                enemy_group.empty()
+                running = False
         else:
             all_sprites.empty()
             tiles_group.empty()
             player_group.empty()
             purpose_group.empty()
             enemy_group.empty()
-            return
+            return True
 
         # if not pygame.sprite.groupcollide(player_group, enemy_group, False, False):
         #     screen.fill((191, 194, 193))
@@ -494,7 +509,9 @@ def play_level_3():
 
         pygame.display.flip()
         clock.tick(FPS)
-        print(pygame.time.get_ticks() // 1000)
+        timer = timer - (pygame.time.get_ticks() // 1000)
+    pygame.time.wait(3000)
+    return False
 
 
 pygame.init()
@@ -541,9 +558,11 @@ camera = Camera()
 
 
 while True:
+    level3 = False
     start_screen()
+    while not level3:
+        level3 = play_level_3()
     play_level()
     #threading.Thread(target=func).start()
     play_level_2()
-    play_level_3()
 #    taimer()
