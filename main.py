@@ -1,11 +1,11 @@
 import random
-
 import pygame
 import os
 import sys
 
 FPS = 60
 all_sprites = pygame.sprite.Group()
+play = True
 
 
 def load_image(name, color_key=None):
@@ -356,6 +356,7 @@ def play_level():
 
         pygame.display.flip()
         clock.tick(FPS)
+        print(pygame.time.get_ticks() // 1000)
         pygame.event.pump()
 
 
@@ -429,6 +430,7 @@ def play_level_2():
 
         pygame.display.flip()
         clock.tick(FPS)
+        print(pygame.time.get_ticks() // 1000)
 
 
 def play_level_3():
@@ -492,6 +494,7 @@ def play_level_3():
 
         pygame.display.flip()
         clock.tick(FPS)
+        print(pygame.time.get_ticks() // 1000)
 
 
 pygame.init()
@@ -536,8 +539,11 @@ tile_width = tile_height = 50
 clock = pygame.time.Clock()
 camera = Camera()
 
+
 while True:
     start_screen()
-    play_level_2()
     play_level()
+    #threading.Thread(target=func).start()
+    play_level_2()
     play_level_3()
+#    taimer()
