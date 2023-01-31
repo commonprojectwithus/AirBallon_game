@@ -8,8 +8,9 @@ FPS = 60
 all_sprites = pygame.sprite.Group()
 pygame.font.init()
 
+
 def load_image(name, color_key=None):
-    fullname = os.path.join('images', name)
+    fullname = os.path.join(name)
     try:
         image = pygame.image.load(fullname)
     except pygame.error as message:
@@ -506,7 +507,7 @@ def play_level_2():
 
 def play_level_3():
     player, purpose, x, y = generate_level_3(load_level('map3.txt'))
-    timer = pygame.time.get_ticks() // 1000 + 3000
+    timer = pygame.time.get_ticks() // 1000 + 2500
 
     global tiles_group, player_group, purpose_group, box_group, down_group
     running = True
@@ -534,8 +535,8 @@ def play_level_3():
                     if pygame.sprite.spritecollideany(player, box_group):
                         player.move_left()
 
-        Purpose.update()
-        Tile.update()
+#        Purpose.update()
+#        Tile.update()
         camera.update(player)
         for sprite in all_sprites:
             camera.apply(sprite)
@@ -566,23 +567,9 @@ def play_level_3():
             enemy_group.empty()
             return True
 
-        if not pygame.sprite.groupcollide(player_group, enemy_group, False, False):
-            gameover = pygame.transform.scale(load_image('dead.jpg'), size)
-            screen.blit(gameover, (0, 0))
-            all_sprites.draw(screen)
-            tiles_group.draw(screen)
-            player_group.draw(screen)
-            purpose_group.draw(screen)
-            enemy_group.draw(screen)
-        else:
-            all_sprites.empty()
-            tiles_group.empty()
-            player_group.empty()
-            enemy_group.empty()
-
         pygame.display.flip()
         clock.tick(FPS)
-        timer = timer - (pygame.time.get_ticks() // 1000)
+        timer = timer - (pygame.time.get_ticks() // 10000)
     pygame.time.wait(3000)
     return False
 
@@ -706,10 +693,10 @@ clock = pygame.time.Clock()
 camera = Camera()
 
 while True:
-    level3 = False
     start_screen()
+    play_level()
+    play_level_2()
+    level3 = False
     while not level3:
         level3 = play_level_3()
     play_level_4()
-    # play_level()
-    # play_level_2()
