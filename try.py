@@ -1085,9 +1085,10 @@ while True:
     pygame.mixer.music.load("sounds/8-1.mp3")
     pygame.mixer.music.play(-1, start=0.0, fade_ms=10)
     comics('fourth.png')
+    comics('fifth.png')
     level3 = False
     while not level3:
         level3 = play_level_3()
-    comics('fifth.png')
     comics('sixth.png')
+    comics('seventh.png')
     pygame.mixer.music.stop()
